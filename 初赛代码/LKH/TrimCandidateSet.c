@@ -1,0 +1,24 @@
+#include "LKH.h"
+
+
+
+void TrimCandidateSet(int MaxCandidates)
+{
+    Node *From;
+    Candidate *NFrom;
+    int Count;
+
+    From = FirstNode;
+    do {
+        Count = 0;
+        for (NFrom = From->CandidateSet; NFrom->To; NFrom++)
+            Count++;
+        if (Count > MaxCandidates) {
+            assert(From->CandidateSet =
+                   (Candidate *) realloc(From->CandidateSet,
+                                         (MaxCandidates +
+                                          1) * sizeof(Candidate)));
+            From->CandidateSet[MaxCandidates].To = 0;
+        }
+    } while ((From = From->Suc) != FirstNode);
+}
